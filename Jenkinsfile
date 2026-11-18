@@ -4,23 +4,27 @@ pipeline {
 
     stages {
 
-        stage('Connect to Ubuntu') {
-            steps {
-                echo 'Connecting to Ubuntu Server...'
+       
+stage('Connect to Ubuntu') {
+    steps {
+        echo 'Connecting to Ubuntu Server...'
 
-                withCredentials([
-                    sshUserPrivateKey(
-                        credentialsId: 'ubuntu-ssh-key',
-                        keyFileVariable: 'SSH_KEY',
-                        usernameVariable: 'SSH_USER'
-                    )
-                ]) {
-                    bat '''
-                    ssh -i "%SSH_KEY%" -o StrictHostKeyChecking=no %SSH_USER%@192.168.1.24 "hostname && whoami"
-                    '''
-                }
-            }
+        withCredentials([
+            sshUserPrivateKey(
+                credentialsId: 'ubuntu-ssh-key',
+                keyFileVariable: 'SSH_KEY',
+                usernameVariable: 'SSH_USER'
+            )
+        ]) {
+            bat '''
+            icacls "%SSH_KEY%" /inheritance:r /grant:r "DESKTOP-KJCSDVI\\CRTSYS001:R"
+
+            ssh -i "%SSH_KEY%" -o StrictHostKeyChecking=no %SSH_USER%@192.168.1.24 "hostname && whoami"
+            '''
         }
+    }
+}
+
 
         stage('Git Pull') {
             steps {
