@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     triggers {
-        // Optional: runs automatically every ~15 minutes without a webhook or Poll SCM
-        pollSCM('') // leave empty or remove if you only want cron-based runs
-        cron('H/15 * * * *')
+        // // Optional: runs automatically every ~15 minutes without a webhook or Poll SCM
+        // pollSCM('') // leave empty or remove if you only want cron-based runs
+        // cron('H/15 * * * *')
     }
 
     environment {
